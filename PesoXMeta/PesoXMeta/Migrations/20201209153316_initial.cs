@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PesoXMeta.Data.Migrations
+namespace PesoXMeta.Migrations
 {
     public partial class initial : Migration
     {

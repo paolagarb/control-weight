@@ -3,7 +3,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,44 +14,22 @@
 <body>
     <div class="text-center">
         <br />
-        <h1>Bem-vindo!</h1>
-        <h5>Me fale sobre você</h5>
+        <h2>
+            ACOMPANHE SUA EVOLUÇÃO...
+        </h2>
+     
         <br />
     </div>
 
-    <form asp-controller="Home" asp-action="Index" method="get">
-        <div class="container">
-            <div class="row bg-row">
-                <div class="col-sm-5 col-12 line-space line">
-                    <h6>Altura</h6>
-                </div>
-                <div class="col-sm-7 col-12 line-space">
-                    <input type="number" name="altura" /> 
-                </div>
-                <div class="col-sm-5 col-12 line-space line">
-                    <h6>Peso Atual</h6>
-                </div>
-                <div class="col-sm-7 col-12 line-space">
-                    <input type="number" name="pesoAtual" />
-                </div>
-                <div class="col-sm-5 col-12 line-space line">
-                    <h6>Meta</h6>
-                </div>
-                <div class="col-sm-7 col-12 line-space">
-                    <input type="number" name="pesoMeta" />
-                </div>
-                <div class="col-md-5 col-12 line-space line">
-                    <h6>Data para atingir a meta</h6>
-                </div>
-                <div class="col-md-7 col-12 line-space">
-                    <input type="date" name="dataMeta" />
-                </div>
-            </div>
+    @if (User?.Identity.IsAuthenticated == false)
+    {
+        <div>
+            <a href="../Identity/Account/Login" class="nav-link login"><u>Login</u></a>
         </div>
-    </form>
-    <div>
-        <a href="../Identity/Account/Login" class="nav-link login"><u>Fazer login</u></a>
-    </div>
+        <div>
+            <a href="../Identity/Account/Register" class="nav-link text-right"><u>Cadastro</u></a>
+        </div>
+    }
 
 </body>
 </html>

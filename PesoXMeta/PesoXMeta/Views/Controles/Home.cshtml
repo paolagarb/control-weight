@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Página Inicial";
+    var controle = ViewBag.Conteudo;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    @if (controle == 0)
+    {
+        <div class="text-center">
+            <br />
+            <h1></h1>
+            <h5>Me fale sobre você</h5>
+            <br />
+        </div>
+
+        <form asp-controller="Controles" asp-action="SalvarPeso" method="get">
+            <div class="container">
+                <div class="row bg-row">
+                    <div class="col-sm-5 col-12 line-space line">
+                        <h6>Altura</h6>
+                    </div>
+                    <div class="col-sm-7 col-12 line-space">
+                        <input type="number" name="altura" />
+                    </div>
+                    <div class="col-sm-5 col-12 line-space line">
+                        <h6>Peso Atual</h6>
+                    </div>
+                    <div class="col-sm-7 col-12 line-space">
+                        <input type="number" name="pesoAtual" />
+                    </div>
+                    <div class="col-sm-5 col-12 line-space line">
+                        <h6>Meta</h6>
+                    </div>
+                    <div class="col-sm-7 col-12 line-space">
+                        <input type="number" name="pesoMeta" />
+                    </div>
+                    <div class="col-md-5 col-12 line-space line">
+                        <h6>Data para atingir a meta</h6>
+                    </div>
+                    <div class="col-md-7 col-12 line-space">
+                        <input type="date" name="dataMeta" />
+                    </div>
+                    <input type="submit" value="->" class="seta"/>
+                </div>
+            </div>
+        </form>
+    } else
+    {
+       <div>
+           <h5>Peso Inicial</h5> viebag.x...
+       </div>
+    }
+</body>
+</html>
