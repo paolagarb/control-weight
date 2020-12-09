@@ -12,13 +12,17 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="text-center">
+    <div class="text-center index-page">
         <br />
         <h2>
-            ACOMPANHE SUA EVOLUÇÃO...
+            ACOMPANHE SUA EVOLUÇÃO!
         </h2>
-     
         <br />
+        <br />
+        <h4 class="text-left">É MUITO BOM <b>VER</b> SUA EVOLUÇÃO DIÁRIA!</h4>
+        <br />
+        <br />
+        <h4 class="text-right">PODER VER SUA EVOLUÇÃO É O MELHOR INCENTIVO!</h4>
     </div>
 
     @if (User?.Identity.IsAuthenticated == false)
@@ -27,7 +31,7 @@
             <a href="../Identity/Account/Login" class="nav-link login"><u>Login</u></a>
         </div>
         <div>
-            <a href="../Identity/Account/Register" class="nav-link text-right"><u>Cadastro</u></a>
+            <a href="../Identity/Account/Register" class="nav-link text-right login"><u>Cadastro</u></a>
         </div>
     }
 

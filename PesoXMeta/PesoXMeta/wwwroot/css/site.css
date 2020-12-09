@@ -49,6 +49,10 @@ html {
     .line-space {
         margin: 15px 0;
     }
+
+    .space {
+        margin-top: 100px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -98,15 +102,18 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
-.login {
+.login, .cadastro {
     color: black;
     font-size: 120%;
     text-align: right;
     margin-right: 10%;
-    margin-top: 10%;
 }
 
-    .login:hover {
+    .login{
+        margin-top: 18%;
+    }
+
+    .login:hover, .cadstro:hover {
         color: black;
         transform: scale(1.01);
         font-weight: bold;
@@ -114,4 +121,16 @@ body {
 
 .seta {
     margin-left: 90%;
+}
+
+row {
+    margin: 15px 0;
+}
+
+.text-principal {
+    margin-top: 50px;
+}
+
+.index-page {
+    margin: 50px;
 }

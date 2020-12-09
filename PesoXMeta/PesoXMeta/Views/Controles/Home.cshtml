@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Página Inicial";
     var controle = ViewBag.Conteudo;
+    var pesoInicial = ViewBag.PesoInicial;
+    var dataInicial = ViewBag.Inicio;
+    var pesoMeta = ViewBag.Meta;
+    var dataMeta = ViewBag.DataMeta;
+    var quantidadeDias = ViewBag.DiasRestantes;
 }
 
 <!DOCTYPE html>
@@ -49,15 +54,46 @@
                     <div class="col-md-7 col-12 line-space">
                         <input type="date" name="dataMeta" />
                     </div>
-                    <input type="submit" value="->" class="seta"/>
+                    <input type="submit" value="->" class="seta" />
                 </div>
             </div>
         </form>
-    } else
+    }
+    else
     {
-       <div>
-           <h5>Peso Inicial</h5> viebag.x...
-       </div>
+        <div class="container space">
+            <div class="row">
+                <div class="col-sm-3 col-6 text-right">
+                    <h3>PESO INICIAL</h3>
+                </div>
+                <div class="col-sm-3 col-6">
+                    <h4>@pesoInicial</h4>
+                </div>
+                <div class="col-sm-3 col-6 text-right">
+                    <h3>INÍCIO</h3>
+                </div>
+                <div class="col-sm-3 col-6">
+                    <h4>@dataInicial</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 col-6 text-right">
+                    <h3>META</h3>
+                </div>
+                <div class="col-sm-3 col-6">
+                    <h4>@pesoMeta</h4>
+                </div>
+                <div class="col-sm-3 col-6 text-right">
+                    <h3>META</h3>
+                </div>
+                <div class="col-sm-3 col-6">
+                    <h4>@dataMeta</h4>
+                </div>
+            </div>
+            <div class="row text-principal text-center">
+                <h3>VOCÊ TEM @quantidadeDias DIAS PARA ALCANÇAR O SEU OBJETIVO!</h3>
+            </div>
+        </div>
     }
 </body>
 </html>

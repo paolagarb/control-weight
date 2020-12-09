@@ -173,6 +173,31 @@ namespace PesoXMeta.Controllers
                             where usuario.UserName == user
                             select control.Id).FirstOrDefault();
             ViewBag.Conteudo = controle;
+
+            ViewBag.PesoInicial = (from control in _context.Controle
+                                   join usuario in _context.User
+                                   on control.IdentityUserID equals usuario.Id
+                                   where usuario.UserName == user
+                                   select control.Peso).FirstOrDefault();
+            ViewBag.Meta = (from control in _context.Controle
+                            join usuario in _context.User
+                            on control.IdentityUserID equals usuario.Id
+                            where usuario.UserName == user
+                            select control.Meta).FirstOrDefault();
+            ViewBag.Inicio = (from control in _context.Controle
+                              join usuario in _context.User
+                              on control.IdentityUserID equals usuario.Id
+                              where usuario.UserName == user
+                              select control.DataInicio.Date).FirstOrDefault();
+            var meta = (from control in _context.Controle
+                                join usuario in _context.User
+                                on control.IdentityUserID equals usuario.Id
+                                where usuario.UserName == user
+                                select control.DataMeta.Date).FirstOrDefault();
+            ViewBag.DataMeta = meta;
+
+            ViewBag.DiasRestantes = meta.Day - DateTime.Today.Day;
+
             return View();
 
         }
