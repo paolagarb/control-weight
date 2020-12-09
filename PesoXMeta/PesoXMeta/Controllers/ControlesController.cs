@@ -174,21 +174,26 @@ namespace PesoXMeta.Controllers
                             select control.Id).FirstOrDefault();
             ViewBag.Conteudo = controle;
 
-            ViewBag.PesoInicial = (from control in _context.Controle
+            var pesoInicial = (from control in _context.Controle
                                    join usuario in _context.User
                                    on control.IdentityUserID equals usuario.Id
                                    where usuario.UserName == user
                                    select control.Peso).FirstOrDefault();
-            ViewBag.Meta = (from control in _context.Controle
+            ViewBag.PesoInicial = pesoInicial;
+
+            var pesoMeta = (from control in _context.Controle
                             join usuario in _context.User
                             on control.IdentityUserID equals usuario.Id
                             where usuario.UserName == user
                             select control.Meta).FirstOrDefault();
+            ViewBag.Meta = pesoMeta;
+
             ViewBag.Inicio = (from control in _context.Controle
                               join usuario in _context.User
                               on control.IdentityUserID equals usuario.Id
                               where usuario.UserName == user
                               select control.DataInicio.Date).FirstOrDefault();
+
             var meta = (from control in _context.Controle
                                 join usuario in _context.User
                                 on control.IdentityUserID equals usuario.Id
@@ -196,10 +201,32 @@ namespace PesoXMeta.Controllers
                                 select control.DataMeta.Date).FirstOrDefault();
             ViewBag.DataMeta = meta;
 
-            ViewBag.DiasRestantes = meta.Day - DateTime.Today.Day;
+            var hoje = DateTime.Today;
+            var dif = meta.Subtract(hoje);
+            ViewBag.DiasRestantes = dif.Days;
+
+            var altura = (from control in _context.Controle
+                          join usuario in _context.User
+                          on control.IdentityUserID equals usuario.Id
+                          where usuario.UserName == user
+                          select control.Altura).FirstOrDefault();
+
+            var imc = pesoInicial / (altura * altura);
+            if (imc >= 16 && imc <= 16.99) ViewBag.Imc = $"Você está muito abaixo do peso! IMC: {imc.ToString("F2")}";
+            if (imc >= 17 && imc <= 18.49) ViewBag.Imc = $"Você está abaixo do peso! IMC: {imc.ToString("F2")}";
+            if (imc >= 18.5 && imc <= 24.99) ViewBag.Imc = $"Você está no seu peso ideal! IMC: {imc.ToString("F2")}";
 
             return View();
+        }
 
+        public IActionResult Adicionar()
+        {
+            return View();
+        }
+
+        public IActionResult Acompanhar()
+        {
+            return View();
         }
 
         private bool ControleExists(int id)

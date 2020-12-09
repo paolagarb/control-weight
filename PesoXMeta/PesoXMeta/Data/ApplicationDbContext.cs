@@ -12,5 +12,6 @@ namespace PesoXMeta.Data
         }
         public DbSet<Models.Controle> Controle { get; set; }
         public DbSet<IdentityUser> User { get; set; }
+        public DbSet<Models.PesoDias> Dias { get; set; }
     }
 }

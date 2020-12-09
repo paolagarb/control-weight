@@ -51,7 +51,7 @@ html {
     }
 
     .space {
-        margin-top: 100px;
+        margin-top: 50px;
     }
 }
 
@@ -109,9 +109,9 @@ body {
     margin-right: 10%;
 }
 
-    .login{
-        margin-top: 18%;
-    }
+.login {
+    margin-top: 18%;
+}
 
     .login:hover, .cadstro:hover {
         color: black;
@@ -133,4 +133,19 @@ row {
 
 .index-page {
     margin: 50px;
+}
+
+.logo {
+    max-width: 40vh;
+    height: auto;
+}
+
+.logo-index {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.space-min {
+    margin: 25px 0;
 }
