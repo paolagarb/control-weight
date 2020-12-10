@@ -219,15 +219,6 @@ namespace PesoXMeta.Controllers
             return View();
         }
 
-        public IActionResult Adicionar()
-        {
-            return View();
-        }
-
-        public IActionResult Acompanhar()
-        {
-            return View();
-        }
 
         private bool ControleExists(int id)
         {

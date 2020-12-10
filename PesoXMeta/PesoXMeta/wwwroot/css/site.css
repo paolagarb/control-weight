@@ -53,6 +53,10 @@ html {
     .space {
         margin-top: 50px;
     }
+
+    .spc-inc {
+        margin-top: 100px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -110,7 +114,7 @@ body {
 }
 
 .login {
-    margin-top: 18%;
+    margin-top: 6%;
 }
 
     .login:hover, .cadstro:hover {
@@ -148,4 +152,8 @@ row {
 
 .space-min {
     margin: 25px 0;
+}
+
+.spc {
+    margin-top: 20px;
 }

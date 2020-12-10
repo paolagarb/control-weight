@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Adicionar";
+}
+<form asp-controller="Dias" asp-action="AdicionarDia" method="get">
+
+    <div class="container">
+        <div class="row spc-inc">
+            <div class="col-sm-5 col-12">
+                <h5 class="text-right">Data</h5>
+            </div>
+            <div class="col-sm-7 col-12">
+                <input type="date" name="data" />
+            </div>
+        </div>
+        <div class="row spc">
+            <div class="col-sm-5 col-12">
+                <h5 class="text-right">Peso</h5>
+            </div>
+            <div class="col-sm-7 col-12">
+                <input type="number" name="peso" step=".01" />
+            </div>
+        </div>
+        <div class="row spc">
+            <div class="text-center col-sm-12 col-12">
+                <input type="submit" value="Salvar" />
+            </div>
+        </div>
+    </div>
+
+</form>
