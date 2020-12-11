@@ -33,6 +33,10 @@ namespace PesoXMeta.Controllers
         {
             List<string> datas = new List<string>();
             List<double> pesos = new List<double>();
+            List<double> porcentagem = new List<double>();
+            double anterior;
+            double porcentual;
+            double dif;
 
             var user = User.Identity.Name;
             var dias = (from c in _context.Controle
@@ -47,6 +51,7 @@ namespace PesoXMeta.Controllers
                         on c.IdentityUserID equals usuario.Id
                         where usuario.UserName == user
                         select c.Peso).FirstOrDefault();
+            anterior = peso;
             pesos.Add(peso);
 
             DateTime atual = DateTime.Today;
@@ -74,12 +79,18 @@ namespace PesoXMeta.Controllers
                                         select c.Peso).FirstOrDefault();
                 if (pesoEspecificado != 0)
                 {
+                    porcentual = (100 * pesoEspecificado) / anterior;
+                    dif = 100 - porcentual;
+
                     pesos.Add(pesoEspecificado);
+                    porcentagem.Add(dif);
+
+                    anterior = pesoEspecificado;
                 }
             }
             ViewBag.Datas = datas;
             ViewBag.Pesos = pesos;
-
+            ViewBag.Porcentagem = porcentagem;
             return View();
         }
 

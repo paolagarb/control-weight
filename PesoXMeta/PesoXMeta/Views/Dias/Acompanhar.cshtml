@@ -1,11 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Acompanhar";
     var datas = ViewBag.Datas;
-
     var pesos = ViewBag.Pesos;
+    var porcentual = ViewBag.Porcentagem;
 }
 
-<h1 class="text-center spc-bottom">@ViewData["Title"]</h1>
+<h1 class="text-center spc-bottom mg-bottom">@ViewData["Title"]</h1>
 
 <div>
     <div class="fl-data">
@@ -23,8 +23,18 @@
         }
     </div>
     <div class="fl-data">
-        %
-        @*REFERENTE AO DIA ANTERIOR*@
+        <h4 class="mg-bottom">%</h4>
+        @foreach (var porcento in porcentual)
+        {
+            if (porcento > 0)
+            {
+                <p> - @porcento.ToString("F2")%</p>
+            }
+            else
+            {
+                <p> + @porcento.ToString("F2")%</p>
+            }
+        }
     </div>
     <div class="fl-grafico">
         @*GRÁFICO*@

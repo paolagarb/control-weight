@@ -81,6 +81,11 @@ html {
     .bg-row {
         margin: 0 auto;
     }
+
+    .fl-data {
+        float: left;
+        width: 33%;
+    }
 }
 
 .border-top {
@@ -170,4 +175,8 @@ row {
 
 .spc {
     margin-top: 20px;
+}
+
+.mg-bottom {
+    margin-bottom: 40px;
 }
