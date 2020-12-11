@@ -180,3 +180,10 @@ row {
 .mg-bottom {
     margin-bottom: 40px;
 }
+
+.flex-grafico {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 40px;
+}
