@@ -1,5 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Acompanhar";
+    var datas = ViewBag.Datas;
+
+    var pesos = ViewBag.Pesos;
 }
+
+<h1 class="text-center spc-bottom">@ViewData["Title"]</h1>
+
+<div>
+    <div class="fl-data">
+        <h4>DATA</h4><br />
+        @foreach (var data in datas)
+        {
+            <p>@data</p>
+        }
+    </div>
+    <div class="fl-data">
+        <h4>PESO</h4><br />
+        @foreach (var peso in pesos)
+        {
+            <p>@peso</p>
+        }
+    </div>
+    <div class="fl-data">
+        %
+        @*REFERENTE AO DIA ANTERIOR*@
+    </div>
+    <div class="fl-grafico">
+        @*GRÁFICO*@
+    </div>
+</div>

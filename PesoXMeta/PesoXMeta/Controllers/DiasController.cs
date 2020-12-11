@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PesoXMeta.Data;
 using PesoXMeta.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +31,55 @@ namespace PesoXMeta.Controllers
 
         public IActionResult Acompanhar()
         {
+            List<string> datas = new List<string>();
+            List<double> pesos = new List<double>();
+
+            var user = User.Identity.Name;
+            var dias = (from c in _context.Controle
+                        join usuario in _context.Users
+                        on c.IdentityUserID equals usuario.Id
+                        where usuario.UserName == user
+                        select c.DataInicio).FirstOrDefault();
+            datas.Add(dias.ToString("dd-MM"));
+
+            var peso = (from c in _context.Controle
+                        join usuario in _context.Users
+                        on c.IdentityUserID equals usuario.Id
+                        where usuario.UserName == user
+                        select c.Peso).FirstOrDefault();
+            pesos.Add(peso);
+
+            DateTime atual = DateTime.Today;
+            var total = Convert.ToInt32((atual.Subtract(dias)).TotalDays);
+
+            for (int i = 1; i <= total; i++)
+            {
+                var datax = dias.AddDays(i);
+
+                var diaEspecificado = (from c in _context.Dias
+                                       join usuario in _context.Users
+                                       on c.IdentityUserId equals usuario.Id
+                                       where usuario.UserName == user &&
+                                       c.Data == datax
+                                       select c.Data).FirstOrDefault();
+                if (diaEspecificado.ToString("dd-MM-yyyy") != "01-01-0001")
+                {
+                    datas.Add(diaEspecificado.ToString("dd-MM"));
+                }
+                var pesoEspecificado = (from c in _context.Dias
+                                        join usuario in _context.Users
+                                        on c.IdentityUserId equals usuario.Id
+                                        where usuario.UserName == user &&
+                                        c.Data == datax
+                                        select c.Peso).FirstOrDefault();
+                if (pesoEspecificado != 0)
+                {
+                    pesos.Add(pesoEspecificado);
+                }
+            }
+            ViewBag.Datas = datas;
+            ViewBag.Pesos = pesos;
+
             return View();
         }
 

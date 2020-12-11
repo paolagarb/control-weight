@@ -55,7 +55,21 @@ html {
     }
 
     .spc-inc {
-        margin-top: 100px;
+        margin-top: 50px;
+    }
+
+    .spc-bottom {
+        margin-top: 30px;
+    }
+
+    .fl-data {
+        float: left;
+        width: 15%;
+    }
+
+    .fl-grafico {
+        float: left;
+        width: 55%;
     }
 }
 
