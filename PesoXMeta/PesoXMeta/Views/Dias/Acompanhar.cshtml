@@ -3,6 +3,7 @@
     var datas = ViewBag.Datas;
     var pesos = ViewBag.Pesos;
     var porcentual = ViewBag.Porcentagem;
+    var id = ViewBag.Id;
 
     var datasGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(datas));
     var pesosGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(pesos));
@@ -14,11 +15,12 @@
 
 <div>
     <div class="fl-edit">
-        @foreach (var data in datas)
+        @foreach (var ids in id)
         {
-        <a >
-            <img src="~/image/editar.png" alt="editar" width="20" class="mg-bottom-edit" /><br />
-        </a>
+            <a asp-action="Edit" asp-route-id="@ids">
+                <img src="~/image/editar.png" alt="Editar" width="20" class="mg-bottom-edit" /><br />
+            </a>
+
         }
 
     </div>
@@ -40,7 +42,7 @@
         <h4 class="mg-bottom">%</h4>
         @foreach (var porcento in porcentual)
         {
-            if (porcento > 0)
+            if (porcento >= 0)
             {
                 <p> - @porcento.ToString("F2")%</p>
             }

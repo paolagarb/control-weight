@@ -31,10 +31,10 @@ namespace PesoXMeta.Controllers
 
         public IActionResult Acompanhar()
         {
-            //List<string> datas = new List<string>();
             List<DateTime> datas = new List<DateTime>();
             List<double> pesos = new List<double>();
             List<double> porcentagem = new List<double>();
+            List<int> id = new List<int>();
             double anterior;
             double porcentual;
             double dif;
@@ -45,8 +45,15 @@ namespace PesoXMeta.Controllers
                         on c.IdentityUserID equals usuario.Id
                         where usuario.UserName == user
                         select c.DataInicio).FirstOrDefault();
-            //datas.Add(dias.ToString("dd-MM"));
             datas.Add(dias);
+
+            var idDias1 = (from c in _context.Controle
+                           join usuario in _context.Users
+                           on c.IdentityUserID equals usuario.Id
+                           where usuario.UserName == user
+                           && c.DataInicio == dias
+                           select c.Id).FirstOrDefault();
+            id.Add(idDias1);
 
             var peso = (from c in _context.Controle
                         join usuario in _context.Users
@@ -71,10 +78,17 @@ namespace PesoXMeta.Controllers
                                        select c.Data).FirstOrDefault();
                 if (diaEspecificado.ToString("dd-MM-yyyy") != "01-01-0001")
                 {
-                    //datas.Add(diaEspecificado.ToString("dd-MM"));
                     datas.Add(diaEspecificado);
+
+                    var idDias = (from c in _context.Dias
+                                  join usuario in _context.Users
+                                  on c.IdentityUserId equals usuario.Id
+                                  where usuario.UserName == user
+                                  && c.Data == diaEspecificado
+                                  select c.Id).FirstOrDefault();
+                    id.Add(idDias);
                 }
-                //}
+
                 var pesoEspecificado = (from c in _context.Dias
                                         join usuario in _context.Users
                                         on c.IdentityUserId equals usuario.Id
@@ -95,6 +109,7 @@ namespace PesoXMeta.Controllers
             ViewBag.Datas = datas;
             ViewBag.Pesos = pesos;
             ViewBag.Porcentagem = porcentagem;
+            ViewBag.Id = id;
             return View();
         }
 
@@ -136,7 +151,7 @@ namespace PesoXMeta.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Data, Peso")] PesoDias pesoDias)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Data, Peso, IdentityUser")] PesoDias pesoDias)
         {
             if (id != pesoDias.Id)
             {
@@ -161,12 +176,20 @@ namespace PesoXMeta.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Acompanhar));
             }
             return View(pesoDias);
         }
 
-     
+        //public IActionResult RetornaId(DateTime data)
+        //{
+        //    var dataString = data.ToString("dd-MM-yyyy");
+        //    var id = (from pesos in _context.Dias
+        //              where pesos.Data.ToString("dd-MM-yyyy") == dataString
+        //              select pesos.Id).FirstOrDefault();
+
+        //    return RedirectToAction(nameof(Edit));
+        //}
 
         private bool PesoDiasExists(int id)
         {

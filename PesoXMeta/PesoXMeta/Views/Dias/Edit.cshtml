@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Editar";
-    Layout = "ControlesController";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -22,6 +21,7 @@
                 <label asp-for="Peso" class="control-label"></label>
                 <input asp-for="Peso" class="form-control" />
                 <span asp-validation-for="Peso" class="text-danger"></span>
+               </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
