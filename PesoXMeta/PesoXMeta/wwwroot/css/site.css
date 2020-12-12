@@ -64,12 +64,18 @@ html {
 
     .fl-data {
         float: left;
-        width: 15%;
+        width: 10%;
+    }
+
+    .fl-edit {
+        float: left;
+        width: 5%;
+        margin: 38px 0;
     }
 
     .fl-grafico {
-        float: left;
-        width: 55%;
+        float: right;
+        width: 60%;
     }
 }
 
@@ -82,9 +88,14 @@ html {
         margin: 0 auto;
     }
 
+    .fl-edit {
+        float: left;
+        width: 22%;
+    }
+
     .fl-data {
         float: left;
-        width: 33%;
+        width: 22%;
     }
 }
 
@@ -178,7 +189,7 @@ row {
 }
 
 .mg-bottom {
-    margin-bottom: 40px;
+    margin-bottom: 45px;
 }
 
 .flex-grafico {
@@ -186,4 +197,8 @@ row {
     justify-content: center;
     align-content: center;
     margin-top: 40px;
+}
+
+.mg-bottom-edit {
+    margin-bottom: 20px;
 }

@@ -8,18 +8,29 @@
     var pesosGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(pesos));
 }
 
+
+
 <h1 class="text-center spc-bottom mg-bottom">@ViewData["Title"]</h1>
 
 <div>
-    <div class="fl-data">
-        <h4>DATA</h4><br />
+    <div class="fl-edit">
         @foreach (var data in datas)
         {
-            <p>@data</p>
+        <a >
+            <img src="~/image/editar.png" alt="editar" width="20" class="mg-bottom-edit" /><br />
+        </a>
+        }
+
+    </div>
+    <div class="fl-data">
+        <h4>DATA</h4>
+        @foreach (var data in datas)
+        {
+            <p>@data.ToString("dd-MM")</p>
         }
     </div>
     <div class="fl-data">
-        <h4>PESO</h4><br />
+        <h4>PESO</h4>
         @foreach (var peso in pesos)
         {
             <p>@peso</p>
@@ -35,7 +46,8 @@
             }
             else
             {
-                <p> + @porcento.ToString("F2")%</p>
+                var removeSubtracao = porcento * -1;
+                <p> + @removeSubtracao.ToString("F2")%</p>
             }
         }
     </div>

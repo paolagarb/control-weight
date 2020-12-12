@@ -31,7 +31,8 @@ namespace PesoXMeta.Controllers
 
         public IActionResult Acompanhar()
         {
-            List<string> datas = new List<string>();
+            //List<string> datas = new List<string>();
+            List<DateTime> datas = new List<DateTime>();
             List<double> pesos = new List<double>();
             List<double> porcentagem = new List<double>();
             double anterior;
@@ -44,7 +45,8 @@ namespace PesoXMeta.Controllers
                         on c.IdentityUserID equals usuario.Id
                         where usuario.UserName == user
                         select c.DataInicio).FirstOrDefault();
-            datas.Add(dias.ToString("dd-MM"));
+            //datas.Add(dias.ToString("dd-MM"));
+            datas.Add(dias);
 
             var peso = (from c in _context.Controle
                         join usuario in _context.Users
@@ -69,8 +71,10 @@ namespace PesoXMeta.Controllers
                                        select c.Data).FirstOrDefault();
                 if (diaEspecificado.ToString("dd-MM-yyyy") != "01-01-0001")
                 {
-                    datas.Add(diaEspecificado.ToString("dd-MM"));
+                    //datas.Add(diaEspecificado.ToString("dd-MM"));
+                    datas.Add(diaEspecificado);
                 }
+                //}
                 var pesoEspecificado = (from c in _context.Dias
                                         join usuario in _context.Users
                                         on c.IdentityUserId equals usuario.Id
@@ -111,6 +115,58 @@ namespace PesoXMeta.Controllers
 
             return RedirectToAction("Home", "Controles");
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var diasPeso = await _context.Dias.FindAsync(id);
+            if (diasPeso == null)
+            {
+                return NotFound();
+            }
+            return View(diasPeso);
+        }
+
+        // POST: Controles/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Data, Peso")] PesoDias pesoDias)
+        {
+            if (id != pesoDias.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(pesoDias);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PesoDiasExists(pesoDias.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(pesoDias);
+        }
+
+     
 
         private bool PesoDiasExists(int id)
         {
