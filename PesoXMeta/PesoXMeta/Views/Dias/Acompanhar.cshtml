@@ -20,7 +20,6 @@
             <a asp-action="Edit" asp-route-id="@ids">
                 <img src="~/image/editar.png" alt="Editar" width="20" class="mg-bottom-edit" /><br />
             </a>
-
         }
 
     </div>
@@ -28,7 +27,9 @@
         <h4>DATA</h4>
         @foreach (var data in datas)
         {
-            <p>@data.ToString("dd-MM")</p>
+            //if (data >= DateTime.Today) {
+                <p>@data.ToString("dd-MM")</p>
+            @* } *@
         }
     </div>
     <div class="fl-data">

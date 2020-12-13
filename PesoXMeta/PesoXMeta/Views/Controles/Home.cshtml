@@ -8,6 +8,7 @@
     var quantidadeDias = ViewBag.DiasRestantes;
     var dataMinima = DateTime.Today.ToString("dd-MM-yyyy");
     var imc = ViewBag.Imc;
+    var ultimoPeso = ViewBag.UltimoPeso;
 }
 
 <!DOCTYPE html>
@@ -111,15 +112,15 @@
             }
             else if (quantidadeDias <= 0)
             {
-                @if (pesoMeta <= pesoInicial)
+                @if (Convert.ToDouble(ultimoPeso) <= Convert.ToDouble(pesoMeta))
                 {
                     <h3>PARABÉNSS! VOCÊ ALCANÇOU O SEU OBJETIVO!</h3>
                 }
                 else
                 {
-                    <p>Estabeleça uma nova meta!</p>
-                    <a href="#">
-                        @*adicionar uma página para alterar meta*@
+                    <h4>Você não atingiu seu objetivo! </h4>
+                    <a href="Meta">
+                        <p>Estabeleça uma nova meta!</p>
                     </a>
                 }
             }

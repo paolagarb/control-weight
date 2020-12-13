@@ -216,9 +216,49 @@ namespace PesoXMeta.Controllers
             if (imc >= 17 && imc <= 18.49) ViewBag.Imc = $"Você está abaixo do peso! IMC: {imc.ToString("F2")}";
             if (imc >= 18.5 && imc <= 24.99) ViewBag.Imc = $"Você está no seu peso ideal! IMC: {imc.ToString("F2")}";
 
+            var ultimoPeso = (from c in _context.Dias
+                             orderby c.Data descending
+                             select c.Peso).FirstOrDefault();
+            ViewBag.UltimoPeso = ultimoPeso;
             return View();
         }
 
+        public IActionResult Meta()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Meta(int id, [Bind("Id, Peso, Meta, DataInicio, DataMeta, IdentityUserId")] Controle controle)
+        {
+            if (id != controle.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(controle);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ControleExists(controle.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Home));
+            }
+            return View(controle);
+        }
 
         private bool ControleExists(int id)
         {
