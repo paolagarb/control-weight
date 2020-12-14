@@ -4,8 +4,13 @@
     var pesos = ViewBag.Pesos;
     var porcentual = ViewBag.Porcentagem;
     var id = ViewBag.Id;
+    List<string> datasGraficoString = new List<string>();
 
-    var datasGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(datas));
+    foreach(var dias in datas)
+    {
+        datasGraficoString.Add(dias.ToString("dd-MM"));
+    }
+    var datasGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(datasGraficoString));
     var pesosGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(pesos));
 }
 
@@ -27,9 +32,7 @@
         <h4>DATA</h4>
         @foreach (var data in datas)
         {
-            //if (data >= DateTime.Today) {
-                <p>@data.ToString("dd-MM")</p>
-            @* } *@
+            <p>@data.ToString("dd-MM")</p>
         }
     </div>
     <div class="fl-data">

@@ -228,36 +228,44 @@ namespace PesoXMeta.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Meta(int id, [Bind("Id, Peso, Meta, DataInicio, DataMeta, IdentityUserId")] Controle controle)
+        public IActionResult AlterarMeta(DateTime dataInicial, DateTime dataFinal, double pesoInicial, double meta)
         {
-            if (id != controle.Id)
+            var user = User.Identity.Name;
+            var atualId = (from c in _context.Controle
+                         join usuario in _context.Users
+                         on c.IdentityUserID equals usuario.Id
+                         where usuario.UserName == user
+                         select c.Id).FirstOrDefault();
+            var atualAltura = (from c in _context.Controle
+                           join usuario in _context.Users
+                           on c.IdentityUserID equals usuario.Id
+                           where usuario.UserName == user
+                           select c.Altura).FirstOrDefault();
+            var userId = (from c in _context.Controle
+                          join usuario in _context.Users
+                          on c.IdentityUserID equals usuario.Id
+                          where usuario.UserName == user
+                          select usuario.Id).FirstOrDefault();
+
+            Controle c1 = new Controle();
+            c1.Altura = atualAltura;
+            c1.DataInicio = dataInicial;
+            c1.DataMeta = dataFinal;
+            c1.Peso = pesoInicial;
+            c1.Meta = meta;
+            c1.Id = atualId;
+            c1.IdentityUserID = userId;
+
+            try
+            {
+                _context.Update(c1);
+               _context.SaveChanges();
+            } catch(Exception)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(controle);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ControleExists(controle.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Home));
-            }
-            return View(controle);
+           
+            return RedirectToAction(nameof(Home));
         }
 
         private bool ControleExists(int id)

@@ -7,42 +7,86 @@
 <h1 class="text-center spc-bottom">@ViewData["Title"]</h1>
 <br />
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Meta">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="DataInicio" class="control-label">Data inicial</label>
-                <input asp-for="DataInicio" class="form-control" type="date"/>
-                <span asp-validation-for="DataInicio" class="text-danger"></span>
+<form asp-controller="Controles" asp-action="AlterarMeta" method="get">
+    <div class="container">
+        <div class="row spc-inc">
+            <div class="col-sm-5 col-12">
+                <h5 class="text-right">Data inicial</h5>
             </div>
-            <div class="form-group">
-                <label asp-for="Peso" class="control-label">Peso inicial</label>
-                <input asp-for="Peso" class="form-control" type="number" step=".01"/>
-                <span asp-validation-for="Peso" class="text-danger"></span>
+            <div class="col-sm-7 col-12">
+                <input type="date" name="dataInicial" />
             </div>
-            <div class="form-group">
-                <label asp-for="DataMeta" class="control-label">Data para atingir a meta</label>
-                <input asp-for="DataMeta" class="form-control" type="date" />
-                <span asp-validation-for="DataMeta" class="text-danger"></span>
+        </div>
+        <div class="row spc">
+            <div class="col-sm-5 col-12">
+                <h5 class="text-right">Peso inicial</h5>
             </div>
-            <div class="form-group">
-                <label asp-for="Meta" class="control-label">Meta</label>
-                <input asp-for="Meta" class="form-control" type="number" step=".01"/>
-                <span asp-validation-for="Meta" class="text-danger"></span>
+            <div class="col-sm-7 col-12">
+                <input type="number" name="pesoInicial" step=".01" />
             </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="IdentityUserID" class="form-control" />
-                <span asp-validation-for="IdentityUserID" class="text-danger"></span>
+        </div>
+        <div class="row spc">
+            <div class="col-sm-5 col-12">
+                <h5 class="text-right">Data para atingir a meta</h5>
             </div>
-            @*<div class="form-group">
-                <input type="hidden" asp-for="Altura" class="form-control" />
-                <span asp-validation-for="Altura" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+            <div class="col-sm-7 col-12">
+                <input type="date" name="dataFinal" />
             </div>
-        </form>
+        </div>
+        <div class="row spc">
+            <div class="col-sm-5 col-12">
+                <h5 class="text-right">Meta</h5>
+            </div>
+            <div class="col-sm-7 col-12">
+                <input type="number" name="meta" step=".01" />
+            </div>
+        </div>
+        <div class="row spc">
+            <div class="text-center col-sm-12 col-12">
+                <input type="submit" value="Salvar" />
+            </div>
+        </div>
     </div>
-</div>
+</form>
+
+
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="Meta">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="DataInicio" class="control-label">Data inicial</label>
+                    <input asp-for="DataInicio" class="form-control" type="date" />
+                    <span asp-validation-for="DataInicio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Peso" class="control-label">Peso inicial</label>
+                    <input asp-for="Peso" class="form-control" type="number" step=".01" />
+                    <span asp-validation-for="Peso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DataMeta" class="control-label">Data para atingir a meta</label>
+                    <input asp-for="DataMeta" class="form-control" type="date" />
+                    <span asp-validation-for="DataMeta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Meta" class="control-label">Meta</label>
+                    <input asp-for="Meta" class="form-control" type="number" step=".01" />
+                    <span asp-validation-for="Meta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="IdentityUserID" class="form-control" />
+                    <span asp-validation-for="IdentityUserID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Altura" class="form-control" />
+                    <span asp-validation-for="Altura" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
