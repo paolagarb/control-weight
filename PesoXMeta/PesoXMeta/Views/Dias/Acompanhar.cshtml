@@ -6,9 +6,12 @@
     var id = ViewBag.Id;
     List<string> datasGraficoString = new List<string>();
 
-    foreach(var dias in datas)
+    if (datas != null)
     {
-        datasGraficoString.Add(dias.ToString("dd-MM"));
+        foreach (var dias in datas)
+        {
+            datasGraficoString.Add(dias.ToString("dd-MM"));
+        }
     }
     var datasGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(datasGraficoString));
     var pesosGrafico = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(pesos));
@@ -17,7 +20,8 @@
 
 
 <h1 class="text-center spc-bottom mg-bottom">@ViewData["Title"]</h1>
-
+@if (datas != null)
+{
 <div>
     <div class="fl-edit">
         @foreach (var ids in id)
@@ -61,7 +65,7 @@
         <canvas id="myChart" class="flex-grafico"></canvas>
     </div>
 </div>
-
+}
 
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');

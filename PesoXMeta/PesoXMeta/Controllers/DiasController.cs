@@ -38,6 +38,8 @@ namespace PesoXMeta.Controllers
             double dif;
             int idDias = 0;
             DateTime diaEspecificado;
+            int total = 0;
+            DateTime datax;
 
             var user = User.Identity.Name;
             var userId = (from id in _context.User
@@ -62,7 +64,6 @@ namespace PesoXMeta.Controllers
                         on c.IdentityUserID equals usuario.Id
                         where usuario.UserName == user
                         select c.Peso).FirstOrDefault();
-            anterior = peso;
 
             pd.Add(new PesoDias
             {
@@ -72,28 +73,51 @@ namespace PesoXMeta.Controllers
                 Peso = peso
             });
 
+            var primeiroDia = (from c in _context.Dias
+                               join usuario in _context.Users
+                                on c.IdentityUserId equals usuario.Id
+                               orderby c.Data
+                               where usuario.UserName == user
+                               select c.Data).FirstOrDefault();
+
             DateTime atual = DateTime.Today;
-            var total = Convert.ToInt32((atual.Subtract(dias)).TotalDays);
+
+            if (primeiroDia < dias)
+            {
+                total = Convert.ToInt32((atual.Subtract(primeiroDia)).TotalDays);
+            }
+            else
+            {
+                total = Convert.ToInt32((atual.Subtract(dias)).TotalDays);
+            }
 
             for (int i = 1; i <= total; i++)
             {
-                var datax = dias.AddDays(i);
+                if (primeiroDia < dias)
+                {
+                    datax = primeiroDia.AddDays(i);
+                }
+                else
+                {
+                    datax = dias.AddDays(i);
+                }
+
 
                 diaEspecificado = (from c in _context.Dias
-                                       join usuario in _context.Users
-                                       on c.IdentityUserId equals usuario.Id
-                                       where usuario.UserName == user &&
-                                       c.Data == datax
-                                       select c.Data).FirstOrDefault();
+                                   join usuario in _context.Users
+                                   on c.IdentityUserId equals usuario.Id
+                                   where usuario.UserName == user &&
+                                   c.Data == datax
+                                   select c.Data).FirstOrDefault();
 
                 if (diaEspecificado.ToString("dd-MM-yyyy") != "01-01-0001")
                 {
                     idDias = (from c in _context.Dias
-                                  join usuario in _context.Users
-                                  on c.IdentityUserId equals usuario.Id
-                                  where usuario.UserName == user
-                                  && c.Data == diaEspecificado
-                                  select c.Id).FirstOrDefault();
+                              join usuario in _context.Users
+                              on c.IdentityUserId equals usuario.Id
+                              where usuario.UserName == user
+                              && c.Data == diaEspecificado
+                              select c.Id).FirstOrDefault();
                 }
 
                 var pesoEspecificado = (from c in _context.Dias
@@ -104,36 +128,50 @@ namespace PesoXMeta.Controllers
                                         select c.Peso).FirstOrDefault();
                 if (pesoEspecificado != 0)
                 {
-                    porcentual = (100 * pesoEspecificado) / anterior;
-                    dif = 100 - porcentual;
-                    porcentagem.Add(dif);
-                
-
-                pd.Add(new PesoDias
-                {
-                    Id = idDias,
-                    IdentityUserId = userId,
-                    Data = diaEspecificado,
-                    Peso = pesoEspecificado
-                });
-
-                anterior = pesoEspecificado;
+                    pd.Add(new PesoDias
+                    {
+                        Id = idDias,
+                        IdentityUserId = userId,
+                        Data = diaEspecificado,
+                        Peso = pesoEspecificado
+                    });
                 }
-
-                var orderDateId = (from dates in pd
-                                 orderby dates.Data
-                                 select dates.Id).ToList();
-                var orderDateData = (from dates in pd
+            }
+            var orderDateId = (from dates in pd
+                               orderby dates.Data
+                               select dates.Id).ToList();
+            var orderDateData = (from dates in pd
                                  orderby dates.Data
                                  select dates.Data).ToList();
-                var orderDatePeso = (from dates in pd
+            var orderDatePeso = (from dates in pd
                                  orderby dates.Data
                                  select dates.Peso).ToList();
-                ViewBag.Datas = orderDateData;
-                ViewBag.Pesos = orderDatePeso;
-                ViewBag.Porcentagem = porcentagem;
-                ViewBag.Id = orderDateId;
+            var orderDate = (from dates in pd
+                             orderby dates.Data
+                             select dates).ToList();
+
+            var orderDateDataFirst = (from dates in pd
+                                      orderby dates.Data
+                                      select dates.Data).FirstOrDefault();
+            var orderDatePesoFirst = (from dates in pd
+                                      orderby dates.Data
+                                      select dates.Peso).FirstOrDefault();
+            anterior = orderDatePesoFirst;
+
+            foreach (var diasPorcentual in orderDate)
+            {
+                if (diasPorcentual.Data != orderDateDataFirst)
+                {
+                    porcentual = (100 * diasPorcentual.Peso) / anterior;
+                    dif = 100 - porcentual;
+                    porcentagem.Add(dif);
+                }
             }
+
+            ViewBag.Datas = orderDateData;
+            ViewBag.Pesos = orderDatePeso;
+            ViewBag.Porcentagem = porcentagem;
+            ViewBag.Id = orderDateId;
             return View();
         }
 
